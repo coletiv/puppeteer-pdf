@@ -22,7 +22,10 @@ defmodule PuppeteerPdf do
   end
 
   def generate(html_input_path, pdf_output_path, options \\ []) do
-     exec_path = Application.get_env(:puppeteer_pdf, :exec_path)
+     exec_path = case Application.get_env(:puppeteer_pdf, :exec_path) do
+       nil -> "puppeteer-pdf"
+       value -> value
+     end
 
      params = Enum.reduce(options, [html_input_path, "--path", pdf_output_path], fn ({key, value}), result ->
        result ++ case key do

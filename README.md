@@ -21,11 +21,69 @@ by adding `puppeteer_pdf` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:puppeteer_pdf, "~> 0.1.0"}
+    {:puppeteer_pdf, "~> 0.1.1"}
   ]
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/puppeteer_pdf](https://hexdocs.pm/puppeteer_pdf).
+## Use
+
+### Initial
+These are the options available right now:
+
+```elixir
+options = [
+  margin_left: 40,
+  margin_right: 40,
+  margin_top: 40,
+  margin_bottom: 150,
+  format: "A4",
+  print_background: true,
+  header_template: header_html, # Support both file and html
+  footer_template: footer_html,
+  display_header_footer: true,
+  debug: true
+]
+```
+
+And to generate the PDF you can use the following code using Phoenix Template:
+
+```
+# Get template rendered previously
+html = Phoenix.View.render_to_string(
+  MyApp.View,
+  "pdf/invoice.html",
+  assigns
+)
+
+# Get full path to generated pdf file
+pdf_path = Path.absname("invoice.pdf")
+
+case PuppeteerPdf.generate_with_html(html, pdf_path, options) do
+  {:ok, _} -> ...
+  {:error, message} -> ...
+end
+```
+
+Or just with HTML file:
+
+```
+html_path = Path.absname("random.html")
+case PuppeteerPdf.generate_with_html(html_path, pdf_path, options) do
+  {:ok, _} -> ...
+  {:error, message} -> ...
+end
+```
+
+### Using header and footer templates
+
+You can defined an HTML header and footer, using the `header_template` and `footer_template` options.
+To use a file, use the following format: `file:///home/user/file.html`.
+
+Don't forget to also include `display_header_footer` to `true`.
+
+### Configure execution path
+
+```elixir
+config :puppeteer_pdf, exec_path: "/usr/local/bin/puppeteer-pdf"
+```
