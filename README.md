@@ -1,6 +1,6 @@
 # PuppeteerPdf
 
-This is a wrapper to NodeJS module [puppeteer_pdf](https://www.npmjs.com/package/puppeteer-pdf). After some attempts to use wkhtmltopdf using (pdf_generator)[https://github.com/gutschilla/elixir-pdf-generator], I've decided to use other software to generate PDF and create a wrapper for it.
+This is a wrapper to NodeJS module [puppeteer_pdf](https://www.npmjs.com/package/puppeteer-pdf). After some attempts to use wkhtmltopdf using [pdf_generator](https://github.com/gutschilla/elixir-pdf-generator), I've decided to use other software to generate PDF and create a wrapper for it.
 
 ## Puppeteer PDF vs wkhtmltopdf
 
@@ -86,4 +86,14 @@ Don't forget to also include `display_header_footer` to `true`.
 
 ```elixir
 config :puppeteer_pdf, exec_path: "/usr/local/bin/puppeteer-pdf"
+```
+
+### Continuous Integration
+
+If you use CI
+
+```
+before_script:
+- nvm install 8
+- npm i puppeteer-pdf -g
 ```
