@@ -11,7 +11,7 @@ defmodule PuppeteerPdf.MixProject do
       package: [
         maintainers: ["David Magalhães"],
         licenses: ["MIT"],
-        links: %{github: "https://github.com/coletiv/cybersource-sdk"}
+        links: %{github: "https://github.com/coletiv/puppeteer-pdf"}
       ],
       description: """
       Wrapper for Puppeteer-pdf, a node module that use Puppeteer to convert
