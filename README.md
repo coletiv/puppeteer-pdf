@@ -84,9 +84,15 @@ Don't forget to also include `display_header_footer` to `true`.
 
 ### Configure execution path
 
+In order to configure this setting:
+
 ```elixir
 config :puppeteer_pdf, exec_path: "/usr/local/bin/puppeteer-pdf"
 ```
+
+For development purposes when working on this project, you can set the `PUPPETEER_PDF_PATH`
+environment variable to point to the `puppeteer-pdf` executable. **Do not attempt to use this env
+var to set the path in production. Instead, use the application configuration, above.**
 
 ### Continuous Integration
 
@@ -100,5 +106,7 @@ before_script:
 
 ### Configuring the `puppeteer-pdf` path
 
-You can set the `PUPPETEER_PDF_PATH` environment variable to point to the `puppeteer-pdf`
-executable.
+
+```elixir
+
+```
