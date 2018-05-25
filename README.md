@@ -97,3 +97,8 @@ before_script:
 - nvm install 8
 - npm i puppeteer-pdf -g
 ```
+
+### Configuring the `puppeteer-pdf` path
+
+You can set the `PUPPETEER_PDF_PATH` environment variable to point to the `puppeteer-pdf`
+executable.
