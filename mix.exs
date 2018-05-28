@@ -8,6 +8,7 @@ defmodule PuppeteerPdf.MixProject do
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
+      aliases: aliases(),
       package: [
         maintainers: ["David Magalhães"],
         licenses: ["MIT"],
@@ -22,6 +23,10 @@ defmodule PuppeteerPdf.MixProject do
       name: "Puppeteer PDF",
       source_url: "https://github.com/coletiv/puppeteer-pdf"
     ]
+  end
+
+  def aliases do
+    [compile: ["compile --warnings-as-errors"]]
   end
 
   # Run "mix help compile.app" to learn about applications.
