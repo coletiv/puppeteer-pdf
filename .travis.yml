@@ -1,0 +1,15 @@
+language: elixir
+elixir: '1.6'
+otp_release: '20.0'
+branches:
+  only:
+  - master
+  - develop
+before_script:
+- nvm install 8
+- npm i puppeteer-pdf -g
+env:
+  matrix:
+  - MIX_ENV=test
+script:
+- mix test
