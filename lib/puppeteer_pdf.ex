@@ -8,14 +8,18 @@ defmodule PuppeteerPdf do
   """
   def generate_with_html(html, pdf_output_path, options \\ []) do
     # Random gen filename
-    case File.open "pdf_gen.html", [:write, :utf8] do
+    pdf_gen_html_filename = "pdfgen_" <> random_string_alphanumeric(10) <> ".html"
+
+    case File.open pdf_gen_html_filename, [:write, :utf8] do
         {:ok, file} ->
           IO.write(file, html)
           File.close file
 
-          html_path = Path.absname("pdf_gen.html")
+          html_path = Path.absname(pdf_gen_html_filename)
+          result = generate(html_path, pdf_output_path, options)
+          File.rm(pdf_gen_html_filename)
 
-          generate(html_path, pdf_output_path, options)
+          result
 
         {:error, error} -> {:error, error}
     end
@@ -49,5 +53,19 @@ defmodule PuppeteerPdf do
       error_message ->
         {:error, error_message}
     end
+  end
+
+  @alphabet Enum.concat([?0..?9, ?A..?Z, ?a..?z])
+  defp random_string_alphanumeric(count) do
+    # Technically not needed, but just to illustrate we're
+    # relying on the PRNG for this in random/1
+    :rand.seed(:exsplus, :os.timestamp())
+    Stream.repeatedly(&random_char_from_alphabet/0)
+    |> Enum.take(count)
+    |> List.to_string()
+  end
+
+  defp random_char_from_alphabet() do
+    Enum.random(@alphabet)
   end
 end
