@@ -69,7 +69,7 @@ Or just with HTML file:
 
 ```
 html_path = Path.absname("random.html")
-case PuppeteerPdf.generate_with_html(html_path, pdf_path, options) do
+case PuppeteerPdf.generate(html_path, pdf_path, options) do
   {:ok, _} -> ...
   {:error, message} -> ...
 end
