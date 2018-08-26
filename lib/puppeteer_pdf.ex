@@ -12,7 +12,7 @@ defmodule PuppeteerPdf do
 
   @doc false
   @deprecated "Use PuppeteerPdf.Generate.from_file/2"
-  @spec generate_with_html(String.t(), String.t(), list()) :: {:ok, String.t()} | {:error, atom()}
+  @spec generate(String.t(), String.t(), list()) :: {:ok, String.t()} | {:error, atom()}
   def generate(file_name_path, pdf_output_path, options \\ []) when is_list(options) do
     PuppeteerPdf.Generate.from_file(file_name_path, pdf_output_path, options)
   end
