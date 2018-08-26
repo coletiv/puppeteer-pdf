@@ -4,7 +4,7 @@ defmodule PuppeteerPdf.MixProject do
   def project do
     [
       app: :puppeteer_pdf,
-      version: "0.1.1",
+      version: "1.0.0",
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -21,7 +21,8 @@ defmodule PuppeteerPdf.MixProject do
 
       # Docs
       name: "Puppeteer PDF",
-      source_url: "https://github.com/coletiv/puppeteer-pdf"
+      source_url: "https://github.com/coletiv/puppeteer-pdf",
+      docs: [main: "readme", extras: ["README.md"]]
     ]
   end
 
