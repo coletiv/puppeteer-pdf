@@ -1,60 +1,53 @@
 defmodule PuppeteerPdf do
   @moduledoc """
-  Wrapper for Puppeteer-Pdf.
+  Wrapper library for NodeJS binary puppeteer-pdf.
   """
 
-  @doc """
-  Generate PDF file using HTML code
-  """
-  def generate_with_html(html, pdf_output_path, options \\ []) do
-    # Random gen filename
-    {:ok, path} = Briefly.create(extname: ".html")
-
-    case File.open(path, [:write, :utf8]) do
-      {:ok, file} ->
-        IO.write(file, html)
-        File.close(file)
-
-        html_path = Path.absname(path)
-
-        generate(html_path, pdf_output_path, options)
-
-      {:error, error} ->
-        {:error, error}
-    end
+  @doc false
+  @deprecated "Use PuppeteerPdf.Generate.from_string/2"
+  @spec generate_with_html(String.t(), String.t(), list()) :: {:ok, String.t()} | {:error, atom()}
+  def generate_with_html(html, pdf_output_path, options \\ []) when is_list(options) do
+    PuppeteerPdf.Generate.from_string(html, pdf_output_path, options)
   end
 
-  def generate(html_input_path, pdf_output_path, options \\ []) do
+  @doc false
+  @deprecated "Use PuppeteerPdf.Generate.from_file/2"
+  @spec generate(String.t(), String.t(), list()) :: {:ok, String.t()} | {:error, atom()}
+  def generate(file_name_path, pdf_output_path, options \\ []) when is_list(options) do
+    PuppeteerPdf.Generate.from_file(file_name_path, pdf_output_path, options)
+  end
+
+  @doc """
+  Get puppeteer-pdf binary version
+  """
+  @spec get_exec_version() :: String.t()
+  def get_exec_version() do
     exec_path =
       case Application.get_env(:puppeteer_pdf, :exec_path) do
         nil -> "puppeteer-pdf"
         value -> value
       end
 
-    params =
-      Enum.reduce(options, [html_input_path, "--path", pdf_output_path], fn {key, value},
-                                                                            result ->
-        result ++
-          case key do
-            :header_template -> ["--headerTemplate=#{value}"]
-            :footer_template -> ["--footerTemplate=#{value}"]
-            :display_header_footer -> ["--displayHeaderFooter", to_string(value)]
-            :format -> ["--format", to_string(value)]
-            :print_background -> ["--printBackground", to_string(value)]
-            :margin_left -> ["--marginLeft", to_string(value)]
-            :margin_right -> ["--marginRight", to_string(value)]
-            :margin_top -> ["--marginTop", to_string(value)]
-            :margin_bottom -> ["--marginBottom", to_string(value)]
-            :debug -> ["--debug"]
-          end
-      end)
-
-    case System.cmd(exec_path, params) do
+    case System.cmd(exec_path, ["--version"]) do
       {cmd_response, _} ->
-        {:ok, cmd_response}
+        String.replace(cmd_response, "\n", "")
 
-      error_message ->
-        {:error, error_message}
+      _error_message ->
+        nil
+    end
+  end
+
+  @doc """
+  Verify if the file generated is a valid PDF file
+  """
+  @spec is_pdf(String.t()) :: boolean
+  def is_pdf(file) do
+    with {:ok, file_content} <- :file.open(file, [:read, :binary]),
+         {:ok, <<37, 80, 68, 70>>} <- :file.read(file_content, 4) do
+      true
+    else
+      _error ->
+        false
     end
   end
 end

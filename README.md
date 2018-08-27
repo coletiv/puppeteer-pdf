@@ -21,7 +21,7 @@ by adding `puppeteer_pdf` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:puppeteer_pdf, "~> 0.1.1"}
+    {:puppeteer_pdf, "~> 1.0.0"}
   ]
 end
 ```
@@ -59,7 +59,7 @@ html = Phoenix.View.render_to_string(
 # Get full path to generated pdf file
 pdf_path = Path.absname("invoice.pdf")
 
-case PuppeteerPdf.generate_with_html(html, pdf_path, options) do
+case PuppeteerPdf.Generate.from_string(html, pdf_path, options) do
   {:ok, _} -> ...
   {:error, message} -> ...
 end
@@ -69,7 +69,7 @@ Or just with HTML file:
 
 ```
 html_path = Path.absname("random.html")
-case PuppeteerPdf.generate_with_html(html_path, pdf_path, options) do
+case PuppeteerPdf.Generate.from_file(html_path, pdf_path, options) do
   {:ok, _} -> ...
   {:error, message} -> ...
 end
@@ -90,6 +90,12 @@ In order to configure this setting:
 config :puppeteer_pdf, exec_path: "/usr/local/bin/puppeteer-pdf"
 ```
 
+Or you can use system environment variable:
+
+```
+export PUPPETEER_PDF_PATH=/usr/local/bin/puppeteer-pdf
+```
+
 For development purposes when working on this project, you can set the `PUPPETEER_PDF_PATH`
 environment variable to point to the `puppeteer-pdf` executable. **Do not attempt to use this env
 var to set the path in production. Instead, use the application configuration, above.**
@@ -102,11 +108,4 @@ If you use CI
 before_script:
 - nvm install 8
 - npm i puppeteer-pdf -g
-```
-
-### Configuring the `puppeteer-pdf` path
-
-
-```elixir
-
 ```
