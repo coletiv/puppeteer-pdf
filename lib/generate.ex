@@ -143,6 +143,10 @@ defmodule PuppeteerPdf.Generate do
 
                 :print_background ->
                   ["--printBackground"]
+
+                :timeout ->
+                  # timeout is not an argument for puppeteer-pdf
+                  :ignore
               end
 
             case result do
@@ -153,6 +157,9 @@ defmodule PuppeteerPdf.Generate do
                 case value do
                   {:error, message} ->
                     {:error, message}
+
+                  :ignore ->
+                    result
 
                   _ ->
                     result ++ value
