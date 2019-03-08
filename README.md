@@ -21,7 +21,7 @@ by adding `puppeteer_pdf` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:puppeteer_pdf, "~> 1.0.0"}
+    {:puppeteer_pdf, "~> 1.0.1"}
   ]
 end
 ```
@@ -42,7 +42,8 @@ options = [
   header_template: header_html, # Support both file and html
   footer_template: footer_html,
   display_header_footer: true,
-  debug: true
+  debug: true,
+  timeout: 10000 # value passed directly to Task.await/2. (Defaults to 5000)
 ]
 ```
 
