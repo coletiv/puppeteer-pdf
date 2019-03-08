@@ -21,6 +21,7 @@ defmodule PuppeteerPdf.Generate do
   - `debug` - Output Puppeteer PDF options
   - `landscape` - Paper orientation.
   - `print_background` - Print background graphics.
+  - `timeout` - Integer value (ms), configures the timeout of the PDF creation (defaults to 5000)
   """
   @spec from_string(String.t(), String.t(), list()) :: {:ok, String.t()} | {:error, atom()}
   def from_string(html_code, pdf_output_path, options \\ []) do
@@ -58,6 +59,7 @@ defmodule PuppeteerPdf.Generate do
   - `debug` - Output Puppeteer PDF options
   - `landscape` - Paper orientation.
   - `print_background` - Print background graphics.
+  - `timeout` - Integer value (ms), configures the timeout of the PDF creation (defaults to 5000)
   """
   @spec from_file(String.t(), String.t(), list()) :: {:ok, String.t()} | {:error, atom()}
   def from_file(html_file_path, pdf_output_path, options \\ []) do
@@ -176,7 +178,7 @@ defmodule PuppeteerPdf.Generate do
                 end
               end)
 
-            Task.await(task)
+            Task.await(task, options[:timeout] || 5000)
         end
 
       false ->
