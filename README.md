@@ -15,8 +15,34 @@ This is a wrapper to NodeJS module [puppeteer_pdf](https://www.npmjs.com/package
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `puppeteer_pdf` to your list of dependencies in `mix.exs`:
+Install `puppeteer-pdf` via npm, with the following command:
+
+```
+npm i puppeteer-pdf -g
+```
+
+If for some reason it doesn't download automatically chromium, it will give you the following error:
+
+```
+(node:14878) UnhandledPromiseRejectionWarning: Error: Chromium revision is not downloaded. Run "npm install" or "yarn install"
+at Launcher.launch (/usr/local/lib/node_modules/puppeteer-pdf/node_modules/puppeteer/lib/Launcher.js:119:15)
+at <anonymous>
+(node:14878) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 1)
+(node:14878) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+```
+
+To solve this, you execute the following commands to copy chromium from the `puppeteer` folder, to the `puppeteer` inside the `puppeteer-pdf`.
+
+On OSX and Linux systems should be the following commands:
+
+```
+npm -i puppeteer -g # This should install chromium
+cp -R /usr/local/lib/node_modules/puppeteer/.local-chromium/ /usr/local/lib/node_modules/puppeteer-pdf/node_modules/puppeteer/
+```
+
+If you have issues related to this, please comment on [this issue](https://github.com/coletiv/puppeteer-pdf/issues/13).
+
+On your elixir project, you just need to add the following dependency:
 
 ```elixir
 def deps do
@@ -26,7 +52,9 @@ def deps do
 end
 ```
 
-## Use
+If you have the older `applications` structure inside `mix.exs`, you need to add `:briefly` to it. If you have `extra_applications`, you don't need to do anything.
+
+## How to use
 
 ### Initial
 These are the options available right now:
