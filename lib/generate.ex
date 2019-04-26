@@ -68,7 +68,7 @@ defmodule PuppeteerPdf.Generate do
         exec_path =
           case Application.get_env(:puppeteer_pdf, :exec_path) do
             nil -> "puppeteer-pdf"
-            value -> value
+            value -> Path.absname(value)
           end
 
         params =
