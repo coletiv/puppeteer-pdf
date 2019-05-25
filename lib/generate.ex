@@ -172,11 +172,12 @@ defmodule PuppeteerPdf.Generate do
             {:error, message}
 
           _ ->
+            {command, options} = CommandHelper.get_command(exec_path, params)
             # In some cases when invalid values are provided the command executing
             # can hang process. This will assure that it can exit.
             task =
               Task.async(fn ->
-                case System.cmd(exec_path, params) do
+                case System.cmd(command, options) do
                   {cmd_response, _} ->
                     {:ok, cmd_response}
 

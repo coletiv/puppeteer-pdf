@@ -2,7 +2,7 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
-config :puppeteer_pdf, exec_path: System.get_env("PUPPETEER_PDF_PATH") || "puppeteer-pdf"
+config :puppeteer_pdf, exec_path: System.get_env("PUPPETEER_PDF_PATH") || "puppeteer-pdf", is_windows_command: false
 
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this
