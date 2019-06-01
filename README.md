@@ -111,12 +111,6 @@ To use a file, use the following format: `file:///home/user/file.html`.
 
 Don't forget to also include `display_header_footer` to `true`.
 
-### Configure options
-
-Two configure options:
-1. execution path of the puppetteer application `exec_path: <pdf_file_path>`
-2. enable windows command environment `is_windows_command: <true_or_false>`
-
 ### Configure execution path
 
 In order to configure this setting:
@@ -134,16 +128,6 @@ export PUPPETEER_PDF_PATH=/usr/local/bin/puppeteer-pdf
 For development purposes when working on this project, you can set the `PUPPETEER_PDF_PATH`
 environment variable to point to the `puppeteer-pdf` executable. **Do not attempt to use this env
 var to set the path in production. Instead, use the application configuration, above.**
-
-### Configure windows command
-
-Running puppeteer-pdf on windows causes issues due to the way that puppeteer is implemented on the command prompt.  The default is_windows_command is false.
-
-See this SO for further reference: https://stackoverflow.com/questions/49164534/elixir-system-cmd-isnt-working
-
-```elixir
-config :puppeteer_pdf, is_windows_command: true
-```
 
 ### Continuous Integration
 
