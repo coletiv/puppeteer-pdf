@@ -25,6 +25,12 @@ Install `puppeteer-pdf` via npm, with the following command:
 npm i puppeteer-pdf -g
 ```
 
+In some cases you will need to install this extra dependencies. Here is an example for Debian based distributions.
+
+```
+sudo apt-get install libxss1 lsof libasound2 libnss3
+```
+
 On your elixir project, you just need to add the following dependency:
 
 ```elixir
