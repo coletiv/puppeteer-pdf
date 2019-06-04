@@ -78,6 +78,20 @@ defmodule PuppeteerPdfTest do
       assert File.exists?(pdf_path) == false
       assert timeout
     end
+
+    test "Handle invalid executable path for puppeteer-pdf" do
+      current_exec_path = Application.get_env(:puppeteer_pdf, :exec_path)
+      :ok = Application.put_env(:puppeteer_pdf, :exec_path, "invalid_path")
+
+      html_value = "<div>Testing 1</div>"
+      pdf_path = "pdf_test.pdf"
+
+      result = PuppeteerPdf.Generate.from_string(html_value, pdf_path)
+
+      :ok = Application.put_env(:puppeteer_pdf, :exec_path, current_exec_path)
+
+      assert {:error, :invalid_exec_path} == result
+    end
   end
 
   test "Check puppeteer-pdf version" do
