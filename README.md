@@ -4,7 +4,7 @@ This is a wrapper to NodeJS module [puppeteer-pdf](https://www.npmjs.com/package
 
 ## Puppeteer PDF vs wkhtmltopdf
 
-I've written a [small blog post](https://medium.com/coletiv-stories/puppeteer-vs-wkhtmltopdf-and-why-i-created-a-new-module-9466eb1db7d1) where I explain my reasons to create this extension. Here is the list of pros and cons compared with `pdf_generator` module.
+I've written a [small blog post](https://coletiv.com/blog/elixir-pdf-generation-puppeteer-wkhtmltopdf/) where I explain my reasons to create this extension. Here is the list of pros and cons compared with `pdf_generator` module.
 
 ### Disadvantage
 
