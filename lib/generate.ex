@@ -60,6 +60,7 @@ defmodule PuppeteerPdf.Generate do
   - `landscape` - Paper orientation.
   - `print_background` - Print background graphics.
   - `timeout` - Integer value (ms), configures the timeout of the PDF creation (defaults to 5000)
+  - `wait_until` - :load, :domcontentloaded, :networkidle0, :networkidle2
   """
   @spec from_file(String.t(), String.t(), list()) :: {:ok, String.t()} | {:error, atom()}
   def from_file(html_file_path, pdf_output_path, options \\ []) do
@@ -135,6 +136,13 @@ defmodule PuppeteerPdf.Generate do
                 :height ->
                   must_be_integer("--height", value)
 
+                :wait_until ->
+                  if Enum.member?([:load, :domcontentloaded, :networkidle0, :networkidle2], value) do
+                    ["--waitUntil", Atom.to_string(value)]
+                  else
+                    {:error, :invalid_wait_until_value}
+                  end
+
                 :debug ->
                   ["--debug"]
 
@@ -177,12 +185,23 @@ defmodule PuppeteerPdf.Generate do
             # can hang process. This will assure that it can exit.
             task =
               Task.async(fn ->
-                case System.cmd(command, options) do
-                  {cmd_response, _} ->
-                    {:ok, cmd_response}
+                try do
+                  case System.cmd(command, options) do
+                    {cmd_response, _} ->
+                      {:ok, cmd_response}
 
-                  error_message ->
-                    {:error, error_message}
+                    error_message ->
+                      {:error, error_message}
+                  end
+                rescue
+                  e in ErlangError ->
+                    %ErlangError{original: error} = e
+
+                    case error do
+                      :enoent ->
+                        # This will happen when the file in exec_path doesn't exists
+                        {:error, :invalid_exec_path}
+                    end
                 end
               end)
 
