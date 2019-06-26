@@ -27,8 +27,8 @@ defmodule PuppeteerPdf do
         nil -> "puppeteer-pdf"
         value -> value
       end
-
-    case System.cmd(exec_path, ["--version"]) do
+    {command, options} = CommandHelper.get_command(exec_path, ["--version"])
+    case System.cmd(command, options) do
       {cmd_response, _} ->
         String.replace(cmd_response, "\n", "")
 
