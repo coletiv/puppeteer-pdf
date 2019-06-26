@@ -11,10 +11,10 @@ defmodule PuppeteerPdf.Generate do
   - `footer_template` - HTML template for the print footer.
   - `display_header_footer` - Display header and footer.
   - `format` - Page format. Possible values: Letter, Legal, Tabloid, Ledger, A0, A1, A2, A3, A4, A5, A6
-  - `margin_left` - Integer value (px)
-  - `margin_right` - Integer value (px)
-  - `margin_top` - Integer value (px)
-  - `margin_bottom` - Integer value (px)
+  - `margin_left` - Integer value or string with one of the supported units (px, in, mm, cm)
+  - `margin_right` - Integer value or string with one of the supported units (px, in, mm, cm)
+  - `margin_top` - Integer value or string with one of the supported units (px, in, mm, cm)
+  - `margin_bottom` - Integer value or string with one of the supported units (px, in, mm, cm)
   - `scale` - Scale of the webpage rendering. (default: 1). Accept values between 0.1 and 2.
   - `width` - Paper width, accepts values labeled with units.
   - `height` - Paper height, accepts values labeled with units.
@@ -111,16 +111,16 @@ defmodule PuppeteerPdf.Generate do
                   end
 
                 :margin_left ->
-                  must_be_integer("--marginLeft", value)
+                  cast_value("--marginLeft", value)
 
                 :margin_right ->
-                  must_be_integer("--marginRight", value)
+                  cast_value("--marginRight", value)
 
                 :margin_top ->
-                  must_be_integer("--marginTop", value)
+                  cast_value("--marginTop", value)
 
                 :margin_bottom ->
-                  must_be_integer("--marginBottom", value)
+                  cast_value("--marginBottom", value)
 
                 :scale ->
                   with {value, ""} <- Float.parse(to_string(value)),
@@ -131,10 +131,10 @@ defmodule PuppeteerPdf.Generate do
                   end
 
                 :width ->
-                  must_be_integer("--width", value)
+                  cast_value("--width", value)
 
                 :height ->
-                  must_be_integer("--height", value)
+                  cast_value("--height", value)
 
                 :wait_until ->
                   if Enum.member?([:load, :domcontentloaded, :networkidle0, :networkidle2], value) do
@@ -213,14 +213,20 @@ defmodule PuppeteerPdf.Generate do
     end
   end
 
-  @spec must_be_integer(String.t(), Integer.t()) ::
-          list() | {:error, :margin_value_must_be_integer}
-  defp must_be_integer(field, value) when is_integer(value) do
-    [field, to_string(value)]
+  @spec cast_value(String.t(), Integer.t()) ::
+          list() | {:error, :must_be_integer_or_units}
+
+  defp cast_value(field, value) when is_integer(value) do
+    [field, "#{value}px"]
   end
 
-  @spec must_be_integer(any(), any()) :: {:error, :margin_value_must_be_integer}
-  defp must_be_integer(_, _) do
-    {:error, :margin_value_must_be_integer}
+  defp cast_value(field, value) do
+    case String.match?(value, ~r/\A[0-9]+(px|in|cm|mm)\Z/) do
+      true ->
+        [field, value]
+
+      false ->
+        {:error, :must_be_integer_or_units}
+    end
   end
 end
