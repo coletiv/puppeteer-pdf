@@ -7,7 +7,7 @@ defmodule PuppeteerPdfTest do
       html_value = "<div>Testing 1</div>"
       pdf_path = "pdf_test.pdf"
 
-      {:ok, _} = PuppeteerPdf.Generate.from_string(html_value, pdf_path)
+      {:ok, _} = PuppeteerPdf.Generate.from_string(html_value, pdf_path, timeout: 10000)
 
       assert File.exists?(pdf_path) == true
       assert PuppeteerPdf.is_pdf(pdf_path)

@@ -36,7 +36,7 @@ On your elixir project, you just need to add the following dependency:
 ```elixir
 def deps do
   [
-    {:puppeteer_pdf, "~> 1.0.1"}
+    {:puppeteer_pdf, "~> 1.0.3"}
   ]
 end
 ```
