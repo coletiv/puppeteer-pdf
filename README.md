@@ -182,7 +182,9 @@ before_script:
 
 ### Docker File
 
-If you are deploying a project with Docker and using this module, this is a working Dockerfile configuration. I couldn't make this work with the Linux Alpine version, but if you have it working please send me a message to add that configuration here.
+If you are deploying a project with Docker and using this module, this is a working Dockerfile configuration.
+
+You can find instructions on how to deploy this with an `alpine` Docker image in [this issue](https://github.com/coletiv/puppeteer-pdf/issues/24).
 
 This Docker file use a two stage building, with a Debian operative system.
 
