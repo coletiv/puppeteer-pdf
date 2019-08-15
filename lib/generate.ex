@@ -186,6 +186,9 @@ defmodule PuppeteerPdf.Generate do
               Task.async(fn ->
                 try do
                   case CommandHelper.cmd(exec_path, params) do
+                    {_, 127} ->
+                      {:error, :invalid_exec_path}
+
                     {cmd_response, _} ->
                       {:ok, cmd_response}
 
