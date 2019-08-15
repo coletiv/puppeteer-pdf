@@ -191,9 +191,6 @@ defmodule PuppeteerPdf.Generate do
 
                     {cmd_response, _} ->
                       {:ok, cmd_response}
-
-                    error_message ->
-                      {:error, error_message}
                   end
                 rescue
                   e in ErlangError ->
