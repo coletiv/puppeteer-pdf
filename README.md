@@ -60,7 +60,7 @@ To solve this, you execute the following commands to copy chromium from the `pup
 On OSX and Linux systems should be the following commands:
 
 ```
-npm -i puppeteer -g # This should install chromium
+npm i puppeteer -g # This should install chromium
 cp -R /usr/local/lib/node_modules/puppeteer/.local-chromium/ /usr/local/lib/node_modules/puppeteer-pdf/node_modules/puppeteer/
 ```
 
