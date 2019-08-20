@@ -31,9 +31,6 @@ defmodule PuppeteerPdf do
     case CommandHelper.cmd(exec_path, ["--version"]) do
       {cmd_response, _} ->
         String.replace(cmd_response, "\n", "")
-
-      _error_message ->
-        nil
     end
   end
 
