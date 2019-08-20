@@ -4,7 +4,7 @@ defmodule PuppeteerPdf.MixProject do
   def project do
     [
       app: :puppeteer_pdf,
-      version: "1.0.3",
+      version: "1.0.4",
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -41,7 +41,8 @@ defmodule PuppeteerPdf.MixProject do
   defp deps do
     [
       {:ex_doc, "~> 0.18", only: :dev},
-      {:briefly, "~> 0.3"}
+      {:briefly, "~> 0.3"},
+      {:dialyxir, "~> 0.5", only: [:dev], runtime: false}
     ]
   end
 end
