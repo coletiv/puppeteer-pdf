@@ -212,7 +212,7 @@ defmodule PuppeteerPdf.Generate do
     end
   end
 
-  @spec cast_value(String.t(), Integer.t()) ::
+  @spec cast_value(String.t(), integer) ::
           list() | {:error, :must_be_integer_or_units}
 
   defp cast_value(field, value) when is_integer(value) do
